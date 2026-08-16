@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Flow.Launcher.Plugin.CustomBangs</RootNamespace>
+    <AssemblyName>Flow.Launcher.Plugin.CustomBangs</AssemblyName>
+    <Version>0.7.0</Version>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flow.Launcher.Plugin" Version="5.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="plugin.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="curated-bangs.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Images\app.png" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

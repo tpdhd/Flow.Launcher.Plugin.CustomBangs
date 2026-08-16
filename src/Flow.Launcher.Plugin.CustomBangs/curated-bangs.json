@@ -1,0 +1,61 @@
+{
+  "version": 6,
+  "bangs": [
+    {
+      "keyword": "google",
+      "alias": null,
+      "defaultUrl": "https://www.google.com/",
+      "urls": ["https://www.google.com/search?q=%s"],
+      "groupMembers": [],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "yt",
+      "alias": null,
+      "defaultUrl": "https://www.youtube.com/",
+      "urls": ["https://www.youtube.com/results?search_query=%s"],
+      "groupMembers": [],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "maps",
+      "alias": null,
+      "defaultUrl": "https://www.google.com/maps",
+      "urls": ["https://www.google.com/maps/search/%s"],
+      "groupMembers": [],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "asd",
+      "alias": null,
+      "defaultUrl": "https://www.amazon.de/",
+      "urls": ["https://www.amazon.de/s?k=%s"],
+      "groupMembers": [],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "ede",
+      "alias": null,
+      "defaultUrl": "https://www.ebay.de/",
+      "urls": ["https://www.ebay.de/sch/i.html?_nkw=%s"],
+      "groupMembers": [],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "ali",
+      "alias": null,
+      "defaultUrl": "https://www.aliexpress.com/",
+      "urls": ["https://www.aliexpress.com/wholesale?SearchText=%s"],
+      "groupMembers": [],
+      "dontEncodeQuery": false
+    },
+    {
+      "keyword": "shop1",
+      "alias": null,
+      "defaultUrl": "",
+      "urls": [],
+      "groupMembers": ["asd", "ede", "ali"],
+      "dontEncodeQuery": false
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+<UserControl
+    x:Class="Flow.Launcher.Plugin.CustomBangs.UI.SettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="BorderBrush" Value="#44888888" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+        <Style x:Key="ToolbarButtonStyle" TargetType="Button">
+            <Setter Property="MinWidth" Value="86" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Padding" Value="12,4" />
+        </Style>
+        <Style x:Key="PrimaryButtonStyle" BasedOn="{StaticResource ToolbarButtonStyle}" TargetType="Button">
+            <Setter Property="Background" Value="#6D5DFB" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="#6D5DFB" />
+        </Style>
+        <Style x:Key="DeleteButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="28" />
+            <Setter Property="Height" Value="28" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FontSize" Value="17" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#E45B65" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="ToolTip" Value="Delete this bang immediately" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#22E45B65" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock FontSize="22" FontWeight="SemiBold" Text="Custom Bangs" />
+                <TextBlock
+                    Margin="0,4,0,0"
+                    Foreground="#AA888888"
+                    Text="Fast, private keyword routing in your default browser" />
+            </StackPanel>
+            <Border
+                Grid.Column="1"
+                Padding="10,5"
+                VerticalAlignment="Center"
+                Background="#226D5DFB"
+                CornerRadius="12">
+                <TextBlock Foreground="#8C7FFF" Text="● Autosave enabled" />
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="130" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Margin="0,0,12,0" VerticalAlignment="Center" FontWeight="SemiBold" Text="Activator" />
+                <TextBox
+                    x:Name="ActivatorTextBox"
+                    Grid.Column="1"
+                    Height="32"
+                    MaxLength="8"
+                    Padding="8,4"
+                    VerticalContentAlignment="Center"
+                    TextChanged="ActivatorTextBox_TextChanged"
+                    ToolTip="Leave empty for no prefix, or enter !, ?, or another activator" />
+                <CheckBox
+                    x:Name="IgnoreCaseCheckBox"
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Checked="IgnoreCaseCheckBox_Changed"
+                    Content="Ignore keyword case"
+                    Unchecked="IgnoreCaseCheckBox_Changed" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="4"
+                    Margin="0,10,0,0"
+                    Foreground="#AA888888"
+                    Text="No prefix is the default: type “yt guitar tutorial”. You can optionally choose !, ?, or another activator. Changes save immediately."
+                    TextWrapping="Wrap" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" Margin="0,14,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" MaxWidth="420" HorizontalAlignment="Left">
+                <TextBox
+                    x:Name="FilterTextBox"
+                    Height="34"
+                    Padding="32,5,10,5"
+                    VerticalContentAlignment="Center"
+                    TextChanged="FilterTextBox_TextChanged"
+                    ToolTip="Filter keywords, aliases and URLs" />
+                <TextBlock
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    Foreground="#AA888888"
+                    IsHitTestVisible="False"
+                    Text="⌕" />
+            </Grid>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button x:Name="DeleteSelectedButton" Click="DeleteSelected_Click" Content="Delete selected" IsEnabled="False" Style="{StaticResource ToolbarButtonStyle}" />
+                <Button Margin="8,0,0,0" Click="AddGroup_Click" Content="+ Search group" Style="{StaticResource ToolbarButtonStyle}" ToolTip="One keyword that opens the same query on multiple websites" />
+                <Button Margin="8,0,0,0" Click="AddBang_Click" Content="+ Add bang" Style="{StaticResource PrimaryButtonStyle}" />
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="3" Padding="1" BorderBrush="#44888888" BorderThickness="1" CornerRadius="10">
+            <DataGrid
+                x:Name="BangsDataGrid"
+                AutoGenerateColumns="False"
+                Background="Transparent"
+                BorderThickness="0"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                EnableColumnVirtualization="True"
+                EnableRowVirtualization="True"
+                GridLinesVisibility="None"
+                HeadersVisibility="Column"
+                IsReadOnly="True"
+                ItemsSource="{Binding BangsView}"
+                KeyDown="BangsDataGrid_KeyDown"
+                MouseDoubleClick="BangsDataGrid_MouseDoubleClick"
+                RowHeight="42"
+                ScrollViewer.CanContentScroll="True"
+                SelectionChanged="BangsDataGrid_SelectionChanged"
+                SelectionMode="Extended"
+                SelectionUnit="FullRow"
+                VirtualizingPanel.IsVirtualizing="True"
+                VirtualizingPanel.VirtualizationMode="Recycling">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="BorderBrush" Value="#22888888" />
+                        <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    </Style>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Height" Value="38" />
+                        <Setter Property="FontWeight" Value="SemiBold" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="100" Binding="{Binding Keyword}" Header="Keyword" />
+                    <DataGridTextColumn Width="78" Binding="{Binding TypeLabel}" Header="Type" />
+                    <DataGridTextColumn Width="180" Binding="{Binding GroupMembersSummary}" Header="Group members" />
+                    <DataGridTextColumn Width="220" Binding="{Binding DefaultUrl}" Header="Default URL" />
+                    <DataGridTextColumn Width="*" MinWidth="180" Binding="{Binding UrlsSummary}" Header="Search targets" />
+                    <DataGridCheckBoxColumn Width="82" Binding="{Binding DontEncodeQuery}" Header="Raw" />
+                    <DataGridTemplateColumn Width="46">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    CommandParameter="{Binding}"
+                                    Content="×"
+                                    Click="DeleteRow_Click"
+                                    Style="{StaticResource DeleteButtonStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Grid Grid.Row="4" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button Click="Import_Click" Content="Import…" Style="{StaticResource ToolbarButtonStyle}" />
+                <Button Margin="8,0,0,0" Click="Export_Click" Content="Export…" Style="{StaticResource ToolbarButtonStyle}" />
+                <Button Margin="8,0,0,0" Click="ResetCurated_Click" Content="Reset curated" Style="{StaticResource ToolbarButtonStyle}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="16,0" VerticalAlignment="Center">
+                <TextBlock x:Name="StatusTextBlock" TextWrapping="Wrap" />
+            </StackPanel>
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock x:Name="CountTextBlock" Margin="0,0,12,0" VerticalAlignment="Center" Foreground="#AA888888" />
+                <Button Click="Save_Click" Content="Save now" Style="{StaticResource ToolbarButtonStyle}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
